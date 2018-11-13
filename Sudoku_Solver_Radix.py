@@ -100,12 +100,15 @@ def check_invalid(puzzle,depth):
 		for x in range(0,9):
 			if(puzzle[depth][x][y]['_v'] != 0): # ignore unknown cells
 				for yy in range(0,9): # same row, different column, duplicate value
-						if((yy != y) and (puzzle[depth][x][yy]['_v'] == puzzle[depth][x][y]['_v'])): c += 1
+						if((yy != y) and (puzzle[depth][x][yy]['_v'] == puzzle[depth][x][y]['_v'])):
+							c += 1
 				for xx in range(0,9): # different row, same column, duplicate value
-						if((xx != x) and (puzzle[depth][xx][y]['_v'] == puzzle[depth][x][y]['_v'])): r += 1
+						if((xx != x) and (puzzle[depth][xx][y]['_v'] == puzzle[depth][x][y]['_v'])):
+							r += 1
 				for yy in range(0,9):
 					for xx in range(0,9): # duplicate value, same group, row/column not already checked
-						if((puzzle[depth][xx][yy]['_v'] == puzzle[depth][x][y]['_v']) and (puzzle[depth][xx][yy]['_g'] == puzzle[depth][x][y]['_g']) and (yy != y) and (xx!=x)): g += 1
+						if((puzzle[depth][xx][yy]['_v'] == puzzle[depth][x][y]['_v']) and (puzzle[depth][xx][yy]['_g'] == puzzle[depth][x][y]['_g']) and (yy != y) and (xx!=x)):
+							g += 1
 	return int(r+c+g) # return integer sum of invalid interactions
 
 def count_known_cells(puzzle,depth):
