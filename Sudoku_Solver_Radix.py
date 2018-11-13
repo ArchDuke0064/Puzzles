@@ -5,12 +5,15 @@
 import copy as c_o_p_y
 
 # global variables
+puzzle_data_01 = "0,0,0,0,0,0,2,0,0,0,3,0,0,0,7,0,1,0,6,0,2,0,0,0,5,0,0,0,7,0,0,6,0,0,0,0,0,0,0,1,0,9,0,0,0,0,0,0,0,2,0,0,4,0,0,0,5,0,0,0,6,0,8,0,1,0,4,0,0,0,7,0,0,0,6,0,0,0,0,0,0"
+#puzzle_file = 'sudoku_puzzle_01.csv'
+#puzzle_file = 'sudoku_puzzle_02.csv'
+#puzzle_file = 'sudoku_puzzle_03.csv'
 stop, max_depth, depth, round, guess, max_iter = False, 64, 0, 0, 0, 9999
 flag = {1:'_1',2:'_2',3:'_3',4:'_4',5:'_5',6:'_6',7:'_7',8:'_8',9:'_9'}
 cell_copy = {0:'_v',1:'_1',2:'_2',3:'_3',4:'_4',5:'_5',6:'_6',7:'_7',8:'_8',9:'_9',10:'_g',11:'_t'}
 cell = {'_v':-1,'_g':'j','_t':9,'_1':True,'_2':True,'_3':True,'_4':True,'_5':True,'_6':True,'_7':True,'_8':True,'_9':True}
 puzzle = [[[c_o_p_y.deepcopy(cell) for y in range(0,9)] for x in range(0,9)] for depth in range(0,max_depth)]
-puzzle_data_01 = "0,0,0,0,0,0,2,0,0,0,3,0,0,0,7,0,1,0,6,0,2,0,0,0,5,0,0,0,7,0,0,6,0,0,0,0,0,0,0,1,0,9,0,0,0,0,0,0,0,2,0,0,4,0,0,0,5,0,0,0,6,0,8,0,1,0,4,0,0,0,7,0,0,0,6,0,0,0,0,0,0"
 
 def print_puzzle(puzzle,depth):
 	values = [['z' for y in range(0,9)] for x in range(0,9)]
@@ -46,7 +49,6 @@ def set_puzzle_groups(puzzle,depth): # Label ('a'...'i') nine 3x3 block groups i
 	for y in range(6,9):
 		for x in range(6,9): puzzle[depth][x][y]['_g']='i'
 
-#puzzle_file = 'p9.csv'
 def load_puzzle_file(puzzle,depth,file_name):
 	try: # Sudoku puzzle file input format: string variable containing 81 comma-separated digits (0-9), read left to right and top to bottom, zero (0) indicates unknown cell
 		file_open = open(file_name,'r') # read-only mode
