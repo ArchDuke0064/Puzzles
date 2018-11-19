@@ -173,7 +173,7 @@ print('\nInitial puzzle:')
 print_puzzle(puzzle,depth)
 
 # solve the puzzle
-while((stop == False) and (round <= max_iter)):
+while((stop == False) and (round <= max_iter) and (depth >= 0)):
 	round += 1
 	search_done = False
 	set_flags(puzzle,depth)
@@ -209,11 +209,16 @@ while((stop == False) and (round <= max_iter)):
 		stop = True
 
 # display results
-if(round <= max_iter):
-	print('\nPuzzle solved in '+str(round)+' rounds:')
+if(depth < 0):
+	print('Unsolvable puzzle.')
 else:
-	print('\nMaximal iterations exceeded.')
-print_puzzle(puzzle,depth)
+	if((round <= max_iter) and (round == 1)):
+		print('\nPuzzle solved in '+str(round)+' round:')
+	elif((round <= max_iter) and (round != 1)):
+		print('\nPuzzle solved in '+str(round)+' rounds:')
+	else:
+		print('\nMaximal iterations exceeded.')
+	print_puzzle(puzzle,depth)
 
 
 
