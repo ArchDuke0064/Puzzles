@@ -6,9 +6,10 @@ import copy as c_o_p_y
 
 # global variables
 puzzle_data_01 = "0,0,0,0,0,0,2,0,0,0,3,0,0,0,7,0,1,0,6,0,2,0,0,0,5,0,0,0,7,0,0,6,0,0,0,0,0,0,0,1,0,9,0,0,0,0,0,0,0,2,0,0,4,0,0,0,5,0,0,0,6,0,8,0,1,0,4,0,0,0,7,0,0,0,6,0,0,0,0,0,0"
-#puzzle_file = 'sudoku_puzzle_01.csv'
-#puzzle_file = 'sudoku_puzzle_02.csv'
-#puzzle_file = 'sudoku_puzzle_03.csv'
+#puzzle_data_02 = "0,7,0,2,5,0,4,0,0,8,0,0,0,0,0,9,0,3,0,0,0,0,0,3,0,7,0,7,0,0,0,0,4,0,2,0,1,0,0,0,0,0,0,0,7,0,4,0,5,0,0,0,0,8,0,9,0,6,0,0,0,0,0,4,0,1,0,0,0,0,0,5,0,0,7,0,8,2,0,3,0"
+#puzzle_file_01 = 'sudoku_puzzle_01.csv'
+#puzzle_file_02 = 'sudoku_puzzle_02.csv'
+#puzzle_file_03 = 'sudoku_puzzle_03.csv'
 stop, max_depth, depth, round, guess, max_iter = False, 64, 0, 0, 0, 9999
 flag = {1:'_1',2:'_2',3:'_3',4:'_4',5:'_5',6:'_6',7:'_7',8:'_8',9:'_9'}
 cell_copy = {0:'_v',1:'_1',2:'_2',3:'_3',4:'_4',5:'_5',6:'_6',7:'_7',8:'_8',9:'_9',10:'_g',11:'_t'}
@@ -31,23 +32,32 @@ def print_puzzle(puzzle,depth):
 
 def set_puzzle_groups(puzzle,depth): # Label ('a'...'i') nine 3x3 block groups in puzzle
 	for y in range(0,3):
-		for x in range(0,3): puzzle[depth][x][y]['_g']='a'
+		for x in range(0,3):
+			puzzle[depth][x][y]['_g']='a'
 	for y in range(0,3):
-		for x in range(3,6): puzzle[depth][x][y]['_g']='b'
+		for x in range(3,6):
+			puzzle[depth][x][y]['_g']='b'
 	for y in range(0,3):
-		for x in range(6,9): puzzle[depth][x][y]['_g']='c'
+		for x in range(6,9):
+			puzzle[depth][x][y]['_g']='c'
 	for y in range(3,6):
-		for x in range(0,3): puzzle[depth][x][y]['_g']='d'
+		for x in range(0,3):
+			puzzle[depth][x][y]['_g']='d'
 	for y in range(3,6):
-		for x in range(3,6): puzzle[depth][x][y]['_g']='e'
+		for x in range(3,6):
+			puzzle[depth][x][y]['_g']='e'
 	for y in range(3,6):
-		for x in range(6,9): puzzle[depth][x][y]['_g']='f'
+		for x in range(6,9):
+			puzzle[depth][x][y]['_g']='f'
 	for y in range(6,9):
-		for x in range(0,3): puzzle[depth][x][y]['_g']='g'
+		for x in range(0,3):
+			puzzle[depth][x][y]['_g']='g'
 	for y in range(6,9):
-		for x in range(3,6): puzzle[depth][x][y]['_g']='h'
+		for x in range(3,6):
+			puzzle[depth][x][y]['_g']='h'
 	for y in range(6,9):
-		for x in range(6,9): puzzle[depth][x][y]['_g']='i'
+		for x in range(6,9):
+			puzzle[depth][x][y]['_g']='i'
 
 def load_puzzle_file(puzzle,depth,file_name):
 	try: # Sudoku puzzle file input format: string variable containing 81 comma-separated digits (0-9), read left to right and top to bottom, zero (0) indicates unknown cell
@@ -59,7 +69,8 @@ def load_puzzle_file(puzzle,depth,file_name):
 				puzzle[depth][x][y]['_v'] = int(file_puzzle[x+9*y]) # load cell values
 	except Exception as e:
 		print('\nPuzzle load failure, file='+str(file_name))
-	finally: file_open.close()
+	finally:
+		file_open.close()
 
 def load_puzzle_data(puzzle,depth,puzzle_data):
 	puzzle_input = puzzle_data.split(',') # load Sudoku CSV file into array
@@ -75,7 +86,8 @@ def set_flags(puzzle,depth): # set boolean flags for each cell value
 					puzzle[depth][x][y][flag[puzzle[depth][x][y]['_v']]] = True # then restore flag
 				if(puzzle[depth][x][y]['_t'] > 1): # clear all other flags for known cell
 					for f in range(1,10):
-						if(puzzle[depth][x][y]['_v'] != f): puzzle[depth][x][y][flag[f]] = False
+						if(puzzle[depth][x][y]['_v'] != f):
+							puzzle[depth][x][y][flag[f]] = False
 				for yy in range(0,9):
 					if(yy != y): # clear column flags
 						puzzle[depth][x][yy][flag[puzzle[depth][x][y]['_v']]] = False
@@ -131,7 +143,8 @@ def solve_1_iteration(puzzle,depth):
 	changes = 0
 	set_flags(puzzle,depth)
 	if(test_flag(puzzle,depth) == True):
-		depth -= 1 ; return -1 # invalid puzzle, go back one level
+		depth -= 1 # invalid puzzle, go back one level
+		return -1
 	if(check_invalid(puzzle,depth) > 0): return -1
 	for y in range(0,9):
 		for x in range(0,9): # if cell unknown & flag total = 1
@@ -150,8 +163,11 @@ def copy_guess(puzzle,depth): # copy guess into next level
 
 # initialize
 set_puzzle_groups(puzzle,depth)
-#load_puzzle_file(puzzle,depth,puzzle_file) # LOAD PUZZLE @ CSV FILE
-load_puzzle_data(puzzle,depth,puzzle_data_01) # LOAD PUZZLE @ STRING DATA
+#load_puzzle_file(puzzle,depth,puzzle_file_01)
+#load_puzzle_file(puzzle,depth,puzzle_file_02)
+#load_puzzle_file(puzzle,depth,puzzle_file_03)
+load_puzzle_data(puzzle,depth,puzzle_data_01)
+#load_puzzle_data(puzzle,depth,puzzle_data_02)
 set_flags(puzzle,depth)
 print('\nInitial puzzle:')
 print_puzzle(puzzle,depth)
@@ -162,21 +178,26 @@ while((stop == False) and (round <= max_iter)):
 	search_done = False
 	set_flags(puzzle,depth)
 	if(count_known_cells(puzzle,depth) == 81):
-		stop = True ; continue # puzzle solved
+		stop = True
+		continue # puzzle solved
 	changes = solve_1_iteration(puzzle,depth)
 	if(changes == -1): # invalid puzzle
 		depth -= 1 # go back one level before failed guess
 		continue
-	elif(changes >= 1): continue
-	else: # elif(changes == 0): # make a guess
-		guess += 1 ; depth += 1
+	elif(changes >= 1):
+		continue
+	elif(changes == 0):
+		depth += 1
 		copy_guess(puzzle,depth)
 		for t in range(2,8): # find cells with fewest options to optimize guessing
-			if(search_done == True): break
+			if(search_done == True):
+				break
 			for y in range(0,9):
-				if(search_done == True): break
+				if(search_done == True):
+					break
 				for x in range(0,9):
-					if(search_done == True): break
+					if(search_done == True):
+						break
 					if(puzzle[depth][x][y]['_t'] == t): # find lowest flag total
 						for f in range(1,10):
 							if(search_done == True): break
@@ -184,10 +205,14 @@ while((stop == False) and (round <= max_iter)):
 								puzzle[depth][x][y]['_v'] = f # set guess value
 								puzzle[depth-1][x][y][flag[f]] = False # exclude guess in lower puzzle
 								search_done = True # stop looking and re-evaluate obvious cell solutions
+	else:
+		stop = True
 
 # display results
-if(round <= max_iter): print('\nSudoku puzzle solved:\n'+str(round)+' rounds\n'+str(guess)+' guesses\n')
-else: print('\nMaximal iterations exceeded.')
+if(round <= max_iter):
+	print('\nPuzzle solved in '+str(round)+' rounds:')
+else:
+	print('\nMaximal iterations exceeded.')
 print_puzzle(puzzle,depth)
 
 
