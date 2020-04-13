@@ -1,6 +1,6 @@
 # Puzzles
 
-Algorithmic solutions to games and puzzles
-Sudoku -- Sudoku_Solver_Radix.py
-Chess  -- 
-Go     -- 
+Algorithmic solutions to games and puzzles<br/>
+Sudoku -- Sudoku_Solver_Radix.py<br/>
+Chess  -- <br/>
+Go     -- <br/>
